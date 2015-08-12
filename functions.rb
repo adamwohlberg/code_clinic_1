@@ -1,11 +1,18 @@
 require 'readline'
 require 'date'
 
+
 #The earliest start date for which there is valid data
 DATA_START_DATE = '2006-09-20'
 
 #We want to limit queries to the remote server. This is the maximum number of days that can be retrieved.   For each day, we make three (3) queries, one for each type of reading.
 MAX_DAYS = 7
+
+READING_TYPES = {
+  "Wind_Speed" => "Wind Speed",
+  "Air_Temp" => "Air Temp",
+  "Barometric_Press" => "Pressure"
+}
 
 #Ask the user (via the command line) to provide valid start and end date
 def query_user_for_data_range
