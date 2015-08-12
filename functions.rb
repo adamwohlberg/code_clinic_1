@@ -1,6 +1,6 @@
 require 'readline'
 require 'date'
-
+require 'open-uri'
 
 #The earliest start date for which there is valid data
 DATA_START_DATE = '2006-09-20'
