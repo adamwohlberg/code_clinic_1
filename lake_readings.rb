@@ -3,7 +3,7 @@
 require_relative('functions')
 
 puts "\n*** LAKE PEND OREILLE READINGS *** "
-puts "Calculates the mean and median of the wind speed, air temperature,"
+puts "\nCalculates the mean and median of the wind speed, air temperature,"
 puts "and barometric pressure recorded at the Deep Moor station"
 puts "on Lake Pend Oreille for a given range of dates."
 
