@@ -14,6 +14,8 @@ READING_TYPES = {
   "Barometric_Press" => "Pressure"
 }
 
+### User Input ###
+
 #Ask the user (via the command line) to provide valid start and end date
 def query_user_for_data_range
 end
@@ -41,6 +43,38 @@ def date_range_valid?(start_date, end_date)
     return true
   end
 end
+
+### Retrieve Remote Data ###
+
+#Retrieves readings for a particular reading type for a range of dates from the remote server as an array of floating point values.
+def get_readings_from_remote_for_dates(type, start_date, end_date)
+  readings = []
+  start_date.upto(end_date) do |date|
+    readings += get_readings_from_remote(type, date)
+  end
+  return readings
+end
+
+#Retrieves readings for a particular reading type for a particular date from the remote server as an array of floating point values.
+def get_readings_from_remote(type, date)
+  raise "Invalid Reading Type" unless 
+READING_TYPES.keys.include?(type)
+
+  #read the remote file, split readings into an array
+  base_url = "http://lop.dt.navy.mil/data/DM"
+  url = "#{base_url}/#{date.year}/#{date.strftime("%Y_%m_%d")}/#{type}"
+  puts "Retrieving #{url}"
+  data = open(url).readlines
+
+  #Extract the reading for each line
+  # "2014_01_01 00:02:57 7.6\r\n" becomes 7.6
+  readings = data.map do |line|
+    line_items = line.chomp.split(" ")
+    reading = line_items[2].to_f
+  end
+  return readings
+end
+
 
 # Ask the user (via the command line) to provide valid start and end dates.
 def query_user_for_date_range
@@ -85,3 +119,6 @@ def query_user_for_date
   end
   return date
 end
+
+
+
